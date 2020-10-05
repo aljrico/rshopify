@@ -19,18 +19,9 @@ Keep it secret, keep it safe
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-count_products}{\code{ShopifyConnection$count_products()}}
 \item \href{#method-new}{\code{ShopifyConnection$new()}}
 \item \href{#method-clone}{\code{ShopifyConnection$clone()}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-count_products"></a>}}
-\subsection{Method \code{count_products()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ShopifyConnection$count_products()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
