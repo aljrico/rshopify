@@ -31,11 +31,14 @@ ShopifyConnection <- R6::R6Class(
       
       # Check connection works
       tryCatch(
-        private$count_products(), 
-        error = function(e) message(paste0("ShopifyConnection | Initial Connection has failed", "\n", e))
+        self$count_products(), 
+        error = function(e){
+          private$log("Initial Connection has failed", "\n")
+          stop(e)
+        }  
       )
       
-      message("ShopifyConnection | Connection established successfully!")
+      private$log("Connection established successfully!")
     }
   ),
   private = list(

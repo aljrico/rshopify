@@ -1,11 +1,9 @@
 #' Count number of products
 #'
-#'
+#' @rdname count_products
 #' @details This function will gather all product listed in the shopify website and count how many are they
-#' @name count_products
-#'
 #' @return integer indicating the number of products
-ShopifyConnection$set("private", "count_products", function() {
+ShopifyConnection$set("public", "count_products", function() {
   request_url <- paste0(private$base_url, "/products/count.json")
 
   # Send htt request

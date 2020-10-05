@@ -1,10 +1,8 @@
 #' Get Latest Stable API Version
 #'
 #' Retrieve the latest stable api version
-#'
+#' @rdname get_api_version
 #' @details Shopify releases a new API version every 3 months at the beginning of the quarter. This function follows this rule to automatically infer the latest
-#' @name get_api_version
-#'
 #' @references \url{https://help.shopify.com/en/api/versioning#the-api-version-release-schedule}
 #' @return character indicating the latest stable API version
 ShopifyConnection$set("private", "get_api_version", function(){
