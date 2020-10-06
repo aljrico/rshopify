@@ -13,6 +13,17 @@ LazyData: true
 RoxygenNote: 7.0.2
 Imports: 
     R6,
-    httr
+    httr,
+    magrittr,
+    data.table,
+    tidyr
 Suggests: 
     testthat (>= 2.1.0)
+Collate: 
+    'orders.R'
+    'ShopifyConnection.R'
+    'count_products.R'
+    'get_api_version.R'
+    'get_request.R'
+    'log.R'
+    'utils.R'

@@ -16,12 +16,30 @@ Keep it secret, keep it safe
 * `test`: this is a test yet.
 }
 
+\section{Public Methods}{
+
+\describe{
+\item{\bold{Orders} functions}{\itemize{
+  \item \code{\link{orders}}
+}}
+}
+}
+
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-get_orders}{\code{ShopifyConnection$get_orders()}}
 \item \href{#method-new}{\code{ShopifyConnection$new()}}
 \item \href{#method-clone}{\code{ShopifyConnection$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_orders"></a>}}
+\subsection{Method \code{get_orders()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ShopifyConnection$get_orders()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}

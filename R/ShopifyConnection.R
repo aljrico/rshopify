@@ -8,6 +8,13 @@
 #'
 #' * `test`: this is a test yet.
 #' 
+#' @section Public Methods:
+#' \describe{
+#' \item{\bold{Orders} functions}{\itemize{
+#'   \item \code{\link{orders}}
+#' }}
+#' }
+#' @include orders.R
 #' @export
 ShopifyConnection <- R6::R6Class(
   "ShopifyConnection",
@@ -39,7 +46,8 @@ ShopifyConnection <- R6::R6Class(
       )
       
       private$log("Connection established successfully!")
-    }
+    },
+    get_orders = get_orders
   ),
   private = list(
     
