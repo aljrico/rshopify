@@ -4,16 +4,6 @@
 #' 
 #' @details Keep it secret, keep it safe
 #' @docType class
-#' @section Public fields:
-#'
-#' * `test`: this is a test yet.
-#' 
-#' @section Public Methods:
-#' \describe{
-#' \item{\bold{Orders} functions}{\itemize{
-#'   \item \code{\link{orders}}
-#' }}
-#' }
 #' @export
 ShopOrder <- R6::R6Class(
   "ShopOrder",

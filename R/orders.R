@@ -177,7 +177,7 @@ get_orders <- function(){
     }
     
     
-    orders_list[[o]] <- clean_order
+    orders_list[[o]] <- ShopOrder$new(clean_order)
     
     
   }

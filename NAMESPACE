@@ -2,6 +2,7 @@
 
 export("%>%")
 export(":=")
+export(ShopOrder)
 export(ShopifyConnection)
 export(log)
 importFrom(data.table,":=")
