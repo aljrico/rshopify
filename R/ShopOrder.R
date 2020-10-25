@@ -11,6 +11,7 @@ ShopOrder <- R6::R6Class(
     code_name = NULL,
     header = NULL,
     shipping_address = NULL,
+    billing_address = NULL,
     line_items = NULL,
     access_token = NULL,
     path_file = NULL,
@@ -19,6 +20,7 @@ ShopOrder <- R6::R6Class(
       # Save main fields
       self$header = this_order$header
       self$shipping_address = this_order$shipping_address
+      self$billing_address = this_order$billing_address
       self$line_items = this_order$line_items
       
       # Create code name
