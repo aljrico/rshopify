@@ -1,14 +1,30 @@
-emailBuilder = R6::R6Class(
+emailBuilder <- R6::R6Class(
   "emailBuilder",
   public = list(
     email_body = NULL,
     initialize = function(orders) {
+
+      # Extract label_names
+      private$label_names <- private$get_label_names(orders)
+
+      # Create html parts of the email
       titles_html <- private$make_titles(orders)
       tables_html <- private$make_tables(orders)
-      self$email_body <- private$build_email(titles_html, tables_html)
+
+      # Build email body
+      self$email_body <- private$build_email_body(titles_html, tables_html)
+
+      # Store credentials
       private$download_credentials()
     },
     send = function(receiver) {
+      attach_labels <-
+        function(eo, ln) {
+          rdrop2::drop_download(sprintf("Coffee Dropshipper/labels/pdf/%s", ln), overwrite = TRUE)
+          eo <- eo %>% emayili::attachment(path = ln)
+          file.remove(ln)
+          return(eo)
+        }
 
       # Create email object
       email_object <-
@@ -18,6 +34,11 @@ emailBuilder = R6::R6Class(
         emayili::subject("The Whale Coffee: New oders coming in!") %>%
         emayili::html(self$email_body)
 
+      # Attach label files
+      for (ln in private$label_names) {
+        email_object <- email_object %>% attach_labels(ln)
+      }
+      
       # Build credentials object
       smtp <- emayili::server(
         host = "smtp.gmail.com",
@@ -26,14 +47,16 @@ emailBuilder = R6::R6Class(
         password = private$credentials$password
       )
 
+
       # Send email
       smtp(email_object, verbose = FALSE)
     }
   ),
   private = list(
     credentials = NULL,
+    label_names = NULL,
     download_credentials = function() {
-      rdrop2::drop_download("Coffee Dropshipper/mail_credentials")
+      rdrop2::drop_download("Coffee Dropshipper/mail_credentials", overwrite = TRUE)
       private$credentials <- readRDS("mail_credentials")
       file.remove("mail_credentials")
     },
@@ -62,11 +85,21 @@ emailBuilder = R6::R6Class(
         items_table[, grind := gsub(".*/ ", "", variant_title)]
         items_table <- items_table[, c("roaster_name", "quantity", "grams", "grind", "label_field")]
 
-        data.table::setnames(items_table, old = c("roaster_name"), new = c(""))
+        data.table::setnames(items_table, old = c("roaster_name", "label_field"), new = c("", "label file"))
         knitr::kable(items_table, format = "html")
       })
     },
-    build_email = function(titles, tables) {
+    get_label_names = function(orders) {
+
+      # Extract all needed labels
+      label_names <-
+        lapply(orders, function(o) o$line_items$label_field) %>%
+        unlist() %>%
+        unique()
+
+      return(label_names)
+    },
+    build_email_body = function(titles, tables) {
       l <- length(titles)
       body <- ""
 

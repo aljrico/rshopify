@@ -21,29 +21,35 @@ mapLabeller = R6::R6Class(
     },
     extract_blend = function(li){
       li$title %>% 
-        stringr::str_remove('The Whale®') %>% 
-        stringr::str_trim() %>% 
+        as.character() %>% 
         stringr::str_to_lower() %>% 
+        stringr::str_split(" ") %>% 
+        .[[1]] %>% 
+        .[[length(.)]] %>% 
+        # stringr::str_remove_all("the whale®") %>% 
+        stringr::str_trim() %>% 
         return()
     },
     write_label_field = function(line_items){
       n_items = nrow(line_items)
       
+      li <- data.table::copy(line_items)
+      li[, label_field := character(.N)]
+      
       # Loop through each item
       for(j in 1:n_items){
-        blend  = private$extract_blend(line_items[j, ])
-        grams  = private$extract_grams(line_items[j, ])
-        grind  = private$extract_grind(line_items[j, ])
+        blend  = private$extract_blend(li[j, ])
+        grams  = private$extract_grams(li[j, ])
+        grind  = private$extract_grind(li[j, ])
         
         blend_condition = stringr::str_detect(private$labels, blend)
         grams_condition = stringr::str_detect(private$labels, grams)
         grind_condition = stringr::str_detect(private$labels, grind)
         
         label_name = private$labels[blend_condition & grams_condition & grind_condition]
-        line_items[j, label_field := label_name]
+        li[j, label_field := label_name]
       }
-      
-      return(line_items)
+      return(li)
     }
   ),
   public = list(
@@ -52,13 +58,23 @@ mapLabeller = R6::R6Class(
     
       # Download existing labels
       private$labels = rdrop2::drop_dir("Coffee Dropshipper/labels/pdf/")$name
+      self$orders = orders
+      
+      # Map labels
+      self$map_labels()
+
+    },
+    map_labels = function(){
+      
+      # Get static copy
+      orders = data.table::copy(self$orders)
       
       # Loop through every order
       n_orders = length(orders)
       for(i in 1:n_orders){
         
         # Get line items from this order
-        line_items = orders[[i]]$line_items
+        line_items = data.table::copy(orders[[i]]$line_items)
         
         # Write label field on every item
         orders[[i]]$line_items = private$write_label_field(line_items)

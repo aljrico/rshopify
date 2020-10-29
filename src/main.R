@@ -1,6 +1,8 @@
 library(rshopify)
 library(emayili)
 library(glue)
+library(data.table)
+library(dplyr)
 
 source('src/emailBuilder.R')
 source('src/mapLabeller.R')

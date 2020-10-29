@@ -4,13 +4,14 @@ WhaleBrain = R6::R6Class(
     shop_connection = NULL,
     orders = NULL,
     initialize = function(){
-      self$establish_connection()
+      private$download_credentials()
+      self$establish_connection(private$credentials)
     },
-    establish_connection = function(){
+    establish_connection = function(credentials){
       self$shop_connection = ShopifyConnection$new(
-        shop_url =  "https://blue-whale-coffee.myshopify.com",
-        api_key = "5397112d5008ca1ba90b9962335a3558",
-        api_password = "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"
+        shop_url =  credentials$shop_url,
+        api_key = credentials$api_key,
+        api_password = credentials$api_password
       )
     },
     download_orders = function(){
@@ -41,6 +42,14 @@ WhaleBrain = R6::R6Class(
       email_builder = emailBuilder$new(self$orders)
       email_builder$send(receiver)
       
+    }
+  ),
+  private = list(
+    credentials = NULL,
+    download_credentials = function(){
+      rdrop2::drop_download("Coffee Dropshipper/shop_credentials", overwrite = TRUE)
+      private$credentials <- readRDS("shop_credentials")
+      file.remove("shop_credentials")
     }
   )
 )
