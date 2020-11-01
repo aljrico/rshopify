@@ -35,9 +35,9 @@ emailBuilder <- R6::R6Class(
         emayili::html(self$email_body)
 
       # Attach label files
-      for (ln in private$label_names) {
-        email_object <- email_object %>% attach_labels(ln)
-      }
+      # for (ln in private$label_names) {
+      #   email_object <- email_object %>% attach_labels(ln)
+      # }
       
       # Build credentials object
       smtp <- emayili::server(
