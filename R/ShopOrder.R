@@ -11,6 +11,7 @@ ShopOrder <- R6::R6Class(
     code_name = NULL,
     header = NULL,
     shipping_address = NULL,
+    shipping_lines = NULL,
     billing_address = NULL,
     line_items = NULL,
     access_token = NULL,
@@ -22,16 +23,17 @@ ShopOrder <- R6::R6Class(
       self$shipping_address = this_order$shipping_address
       self$billing_address = this_order$billing_address
       self$line_items = this_order$line_items
+      self$shipping_lines = this_order$shipping_lines
       
       # Create code name
       creation_date = self$header$created_at %>% as.Date() %>% gsub("-", "", .)
       self$code_name = paste0(creation_date, "_", self$header$id)
       
       # Retrieve access_token
-      self$access_token = readRDS('token.rds')
+      # self$access_token = readRDS('token.rds')
       
       # Write file path
-      self$path_file <- paste0("Coffee Dropshipper/orders/")
+      # self$path_file <- paste0("Coffee Dropshipper/orders/")
       
     }
   )
