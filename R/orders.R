@@ -60,6 +60,7 @@ get_orders <- function(){
   # query_parameters <- list(...)
   response <- private$get_request(request_url)
   
+  # saveRDS(response, 'response')
   # Parse response
   # response %>% 
   #   httr::content() %>% 
@@ -101,16 +102,20 @@ get_orders <- function(){
     clean_order[["header"]] <- order_header
     
     unnest_columns <- function(dt){
-      columns <- colnames(dt)
-      for(col in columns){
-        dt_length <- nrow(dt)
-        if(dt_length == 0) next
-        if(length(dt[[col]][[1]]) > 1){
-          dt <- dt %>% tidyr::unnest_wider(col = col, names_sep = "_") %>% data.table::data.table()
-        }
-      }
       
-      return(dt)
+      while(TRUE){
+        columns <- colnames(dt)
+        are_they_nested_columns <- FALSE
+        for(col in columns){
+          dt_length <- nrow(dt)
+          if(dt_length == 0) next
+          if(length(dt[[col]][[1]]) > 1){
+            are_they_nested_columns <- TRUE
+            dt <- dt %>% tidyr::unnest_wider(col = col, names_sep = "_") %>% data.table::data.table()
+          }
+        }
+        if(isFALSE(are_they_nested_columns)) return(dt)
+      }
     }
     make_prices_table <- function(my_order){
       shop_money <- list()
@@ -144,11 +149,12 @@ get_orders <- function(){
             unnest_columns()
           
           # Clean rough columns
-          this_item[, origin_location := NULL]
-          this_item[, properties := NULL]
-          this_item[, discount_allocations := NULL]
-          this_item[, duties := NULL]
-          this_item[, tax_lines := NULL]
+          rough_columns <- c("origin_location", "properties", "discount_allocations", "duties", "tax_lines")
+          for(col in rough_columns){
+            if(col %in% colnames(this_item)){
+              data.table::set(this_item, j = col, value = NULL)
+            }
+          } 
           
           # Remove duplicated rows
           this_item = unique(this_item)
