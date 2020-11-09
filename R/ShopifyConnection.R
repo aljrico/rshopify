@@ -14,7 +14,7 @@
 #'   \item \code{\link{orders}}
 #' }}
 #' }
-#' @include orders.R
+#' @include OrdersDownloader.R
 #' @export
 ShopifyConnection <- R6::R6Class(
   "ShopifyConnection",
@@ -47,7 +47,10 @@ ShopifyConnection <- R6::R6Class(
       
       private$log("Connection established successfully!")
     },
-    get_orders = get_orders
+    get_orders = function(){
+      od = OrdersDownloader$new(base_url = private$base_url, api_key = private$api_key, api_password = private$api_password)
+      od$download()
+    } 
   ),
   private = list(
     
