@@ -3,9 +3,6 @@
 \name{:=}
 \alias{:=}
 \title{Assignment operator}
-\usage{
-DT[, col1 := col2]
-}
 \description{
 Assignment operator
 }

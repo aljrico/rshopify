@@ -35,6 +35,14 @@ ShopOrder <- R6::R6Class(
       # Write file path
       # self$path_file <- paste0("Coffee Dropshipper/orders/")
       
+    },
+    fulfill = function(shopify_connection, body){
+      
+      if(!any(class(shopify_connection) == "ShopifyConnection")) stop("A proper ShopifyConnection class needs to be introduced")
+      
+      id <- self$header$id
+      shopify_connection$fulfill_order(id, body)
+
     }
   )
 )

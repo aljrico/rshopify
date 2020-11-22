@@ -89,7 +89,7 @@ OrdersDownloader = R6::R6Class(
     clean_orders = function(raw_orders){
       
       orders_list <- list()
-      for(o in 1:length(raw_orders)){
+      for(o in seq_along(raw_orders)){
         this_order <- raw_orders[[o]]
         
         clean_order <- list()

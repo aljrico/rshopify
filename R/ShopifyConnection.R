@@ -11,7 +11,7 @@
 #' @section Public Methods:
 #' \describe{
 #' \item{\bold{Orders} functions}{\itemize{
-#'   \item \code{\link{orders}}
+#'   \item \code{\link{OrdersDownloader}}
 #' }}
 #' }
 #' @include OrdersDownloader.R
@@ -50,7 +50,24 @@ ShopifyConnection <- R6::R6Class(
     get_orders = function(){
       od = OrdersDownloader$new(base_url = private$base_url, api_key = private$api_key, api_password = private$api_password)
       od$download()
-    } 
+    },
+    fulfill_order = function(order_id, body){
+      request_url <- glue::glue("{private$base_url}/orders/{order_id}/fulfillments.json")
+      
+      
+      ful_body <- list()
+      ful_body[["fulfillment"]] <- body
+      
+      response <- private$post_request(request_url, body = ful_body)
+      
+      clean_response <- response %>% httr::content()
+      
+      if(any(names(clean_response) %>% stringr::str_detect("error"))){
+        stop(clean_response$error)
+      }else{
+        message(clean_response)
+      }
+    }
   ),
   private = list(
     

@@ -14,6 +14,7 @@ Keep it secret, keep it safe
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ShopOrder$new()}}
+\item \href{#method-fulfill}{\code{ShopOrder$fulfill()}}
 \item \href{#method-clone}{\code{ShopOrder$clone()}}
 }
 }
@@ -22,6 +23,14 @@ Keep it secret, keep it safe
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ShopOrder$new(this_order)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fulfill"></a>}}
+\subsection{Method \code{fulfill()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ShopOrder$fulfill(shopify_connection)}\if{html}{\out{</div>}}
 }
 
 }

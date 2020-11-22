@@ -20,7 +20,7 @@ Keep it secret, keep it safe
 
 \describe{
 \item{\bold{Orders} functions}{\itemize{
-  \item \code{\link{orders}}
+  \item \code{\link{OrdersDownloader}}
 }}
 }
 }
@@ -28,18 +28,11 @@ Keep it secret, keep it safe
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-get_orders}{\code{ShopifyConnection$get_orders()}}
 \item \href{#method-new}{\code{ShopifyConnection$new()}}
+\item \href{#method-get_orders}{\code{ShopifyConnection$get_orders()}}
+\item \href{#method-fulfill_order}{\code{ShopifyConnection$fulfill_order()}}
 \item \href{#method-clone}{\code{ShopifyConnection$clone()}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_orders"></a>}}
-\subsection{Method \code{get_orders()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ShopifyConnection$get_orders()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -61,6 +54,22 @@ Keep it secret, keep it safe
 }
 \subsection{Details}{
 if successful, will return a new \code{ShopifyConnection} object.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_orders"></a>}}
+\subsection{Method \code{get_orders()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ShopifyConnection$get_orders()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fulfill_order"></a>}}
+\subsection{Method \code{fulfill_order()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ShopifyConnection$fulfill_order(order_id)}\if{html}{\out{</div>}}
 }
 
 }
