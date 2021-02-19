@@ -88,6 +88,9 @@ OrdersDownloader = R6::R6Class(
     },
     clean_orders = function(raw_orders){
       
+      # Sometimes there are just no pending orders
+      if(length(raw_orders) == 0) return(NULL)
+      
       orders_list <- list()
       for(o in seq_along(raw_orders)){
         this_order <- raw_orders[[o]]
@@ -174,8 +177,7 @@ OrdersDownloader = R6::R6Class(
               # Add to the list
               items_list[[l]] = this_item
             }
-            
-            clean_order[[d]] <- items_list %>% data.table::rbindlist()
+            clean_order[[d]] <- items_list %>% data.table::rbindlist(fill = TRUE)
           }else if(d %in% c("customer")){
             clean_order[[d]] <- this_order[[d]]
           }else if(d %in% c("total_line_items_price_set", "subtotal_price_set", "total_discounts_set", "total_shipping_price_set", "total_tax_set", "total_price_set")){
@@ -204,21 +206,3 @@ OrdersDownloader = R6::R6Class(
     }
   )
 )
-# get_orders <- function(){
-#   
-# 
-#   
-#   # Get complete URL
-#   request_url <- paste0(private$base_url, "/orders.json")
-#   
-#   # Extract HTTP response
-#   response <- private$get_request(request_url)
-#   
-#   # Extract raw orders
-#   raw_orders <- response %>% httr::content() %>% .$orders
-#   
-#   # Process raw orders into specific class list
-#   orders_list <- raw_orders %>% clean_orders()
-#   
-#   return(orders_list)
-# }

@@ -2,7 +2,6 @@
 # Read locally saved credentials
 credentials <- readRDS('../testdata/shop_credentials')
 
-
 test_that("connection can be made", {
   
   # Establish connection
